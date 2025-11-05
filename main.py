@@ -1,3 +1,4 @@
+import env  # noqa: F401  Ensures .env is loaded on import
 from chat import ChatNode
 from line import Bridge, CallRequest, VoiceAgentApp, VoiceAgentSystem
 from line.events import UserStartedSpeaking, UserStoppedSpeaking, UserTranscriptionReceived

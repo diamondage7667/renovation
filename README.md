@@ -29,3 +29,24 @@ Required:
 
 Optional:
 - `PORT`: Server port (default: 8000)
+
+## Leads Dashboard (Calls, Transcripts, and Audio)
+
+We provide a simple dashboard to review calls for a specific agent, play call audio, read transcripts, and accept leads.
+
+### Configure
+
+Set the following environment variables:
+
+- `CARTESIA_API_KEY` (required)
+- `AGENT_ID` (default: `agent_tLP2HN5nF4SMpHBSYMWzZY`)
+- `AGENT_PHONE_NUMBER` (default: `+12173874858`) – used for a sanity check
+- `DASHBOARD_PORT` (default: `8080`)
+
+### Run
+
+```bash
+uv run dashboard_server.py
+```
+
+Open `http://localhost:8080` to view calls. The dashboard lists recent calls for the configured agent (with transcripts) and exposes an audio player for each call.

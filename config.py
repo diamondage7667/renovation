@@ -4,6 +4,8 @@ This file should be customized based on the agent specifications to control
 the behavior of the template.
 """
 
+import os
+
 ##################################################
 ####            LLM Settings                ####
 ##################################################
@@ -18,6 +20,16 @@ CHAT_TEMPERATURE = 0.7
 ##################################################
 # Set current location here
 LOCATION = "San Francisco, California"
+
+##################################################
+####        Cartesia / Calls Config           ####
+##################################################
+# Required server-side API key to query Cartesia REST APIs
+CARTESIA_API_KEY = os.getenv("CARTESIA_API_KEY", "")
+
+# Target agent and phone configuration
+AGENT_ID = os.getenv("AGENT_ID", "agent_tLP2HN5nF4SMpHBSYMWzZY")
+AGENT_PHONE_E164 = os.getenv("AGENT_PHONE_E164", "+12173874858")
 
 ##################################################
 ####        Agent Prompt                   ####

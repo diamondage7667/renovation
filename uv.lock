@@ -203,6 +203,7 @@ dependencies = [
     { name = "cartesia-line" },
     { name = "fastapi" },
     { name = "google-genai" },
+    { name = "httpx" },
     { name = "loguru" },
     { name = "uvicorn" },
 ]
@@ -212,6 +213,7 @@ requires-dist = [
     { name = "cartesia-line" },
     { name = "fastapi" },
     { name = "google-genai" },
+    { name = "httpx" },
     { name = "loguru" },
     { name = "uvicorn" },
 ]

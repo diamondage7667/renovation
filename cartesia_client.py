@@ -11,8 +11,8 @@ class CartesiaClient:
         self.api_key = api_key or os.getenv("CARTESIA_API_KEY")
         if not self.api_key:
             raise RuntimeError("CARTESIA_API_KEY is required")
-        self.api_version = api_version
-        self.base_url = "https://api.cartesia.ai"
+        self.api_version = os.getenv("CARTESIA_VERSION", api_version)
+        self.base_url = os.getenv("CARTESIA_BASE_URL", "https://api.cartesia.ai")
         self._client = httpx.AsyncClient(timeout=30.0)
 
     def _headers(self) -> Dict[str, str]:

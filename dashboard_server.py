@@ -117,7 +117,8 @@ async def index() -> str:
 @app.get("/calls")
 async def list_calls() -> Dict[str, Any]:
     try:
-        return await client.list_calls(AGENT_ID, expand_transcript=True, limit=50)
+        data = await client.list_calls(AGENT_ID, expand_transcript=True, limit=50)
+        return data
     except Exception as e:
         logger.exception("Failed to list calls")
         raise HTTPException(status_code=502, detail=str(e))
@@ -155,6 +156,24 @@ async def get_agent_phone() -> Dict[str, Any]:
         raise HTTPException(status_code=502, detail=str(e))
 
 
+@app.get("/_health")
+async def health() -> Dict[str, Any]:
+    return {"ok": True}
+
+
+@app.get("/_config")
+async def config_view() -> Dict[str, Any]:
+    # Mask secrets for safe debugging in deployments
+    masked_key = "set" if os.getenv("CARTESIA_API_KEY") else "missing"
+    return {
+        "agent_id": AGENT_ID,
+        "agent_phone_number": EXPECTED_AGENT_NUMBER,
+        "cartesia_version": os.getenv("CARTESIA_VERSION", "2025-04-16"),
+        "cartesia_base_url": os.getenv("CARTESIA_BASE_URL", "https://api.cartesia.ai"),
+        "cartesia_api_key": masked_key,
+    }
+
+
 # Minimal in-memory store for accepted leads
 ACCEPTED: dict[str, str] = {}
 
@@ -169,6 +188,10 @@ if __name__ == "__main__":
     import uvicorn
 
     port = int(os.getenv("DASHBOARD_PORT", "8080"))
+    logger.info(
+        f"Starting dashboard on port {port} with agent_id={AGENT_ID} version="
+        f"{os.getenv('CARTESIA_VERSION', '2025-04-16')}"
+    )
     uvicorn.run("dashboard_server:app", host="0.0.0.0", port=port, reload=False)
 
 
